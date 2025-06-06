@@ -7,33 +7,29 @@ body {
 }
 
 header {
-  background-color: #4b0082; 
+  background-color: #4b0082;
   color: white;
   padding: 20px;
   text-align: center;
 }
 
+.about, .gallery, .feedback {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.about:hover, .gallery:hover, .feedback:hover {
+  transform: scale(1.01);
+}
 
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.about, .gallery {
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.feedback {
-  margin: 20px;
-  border: 1px solid #aaa;
-  padding: 15px;
 }
 
 table {
@@ -47,11 +43,68 @@ table, td, th {
 }
 
 thead {
-  background-color: #f0f0f0;
+  background-color: #e0e0e0;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.gallery iframe,
+.gallery audio {
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+fieldset {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+button {
+  background-color: #4b0082;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #36005c;
 }
 
 @media (max-width: 600px) {
   .grid-container {
     grid-template-columns: 1fr;
   }
+
+  .gallery img,
+  .gallery iframe {
+    width: 100%;
+  }
 }
+
+/* Used chatgpt for help with styling and implementing colors*/
