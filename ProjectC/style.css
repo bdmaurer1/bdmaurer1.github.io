@@ -1,0 +1,44 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.about, .gallery {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.feedback {
+  margin: 20px;
+  border: 1px solid #aaa;
+  padding: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid #aaa;
+  padding: 8px;
+}
+
+thead {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}

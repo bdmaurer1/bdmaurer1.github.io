@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brady Maurer's Profile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Brady Maurer's Profile</h1>
+  </header>
+
+  <main class="grid-container">
+    <section class="about">
+      <h2>About Me</h2>
+      <table>
+        <caption>Profile Information</caption>
+        <thead>
+          <tr><th colspan="2">Basic Info</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Name:</td><td>Brady Maurer</td></tr>
+          <tr><td>Birthday:</td><td>June 3, 2003</td></tr>
+          <tr><td>Favorite Color:</td><td>Purple</td></tr>
+          <tr><td>Favorite Quote:</td><td>"Nothing changes if nothing changes"</td></tr>
+          <tr><td>Favorite Food:</td><td>Hamburger</td></tr>
+          <tr><td>Favorite Movie:</td><td>Django Unchained</td></tr>
+          <tr><td>Favorite Sport:</td><td>Basketball</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="2">That's a wrap!</td></tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <section class="gallery">
+      <h2>Gallery</h2>
+      <img src="profilephoto.jpg" alt="Profile Photo" />
+      <iframe width="300" height="200" src="https://www.youtube.com/watch?v=0fUCuvNlOCg" title="YouTube video" allowfullscreen></iframe>
+      <audio controls>
+        <source src="guitaraudio.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+    </section>
+  </main>
+
+  <section class="feedback">
+    <h2>Leave Feedback</h2>
+    <form action="#" method="POST">
+      <fieldset>
+        <legend>Your Info</legend>
+        <label for="name">Name:</label>
+        <input id="name" name="name" type="text" required /><br/>
+
+        <label for="email">Email:</label>
+        <input id="email" name="email" type="email" required /><br/>
+
+        <label for="color">Favorite Color:</label>
+        <input id="color" name="color" type="color" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Rating</legend>
+        <label><input type="radio" name="rating" value="1" required /> 1</label>
+        <label><input type="radio" name="rating" value="2" /> 2</label>
+        <label><input type="radio" name="rating" value="3" /> 3</label>
+        <label><input type="radio" name="rating" value="4" /> 4</label>
+        <label><input type="radio" name="rating" value="5" /> 5</label>
+      </fieldset>
+
+      <label for="message">Message:</label><br/>
+      <textarea id="message" name="message"></textarea><br/>
+
+      <label><input type="checkbox" name="mailing" /> Join mailing list</label><br/>
+
+      <button type="submit">Send Feedback</button>
+    </form>
+  </section>
+</body>
+</html>
