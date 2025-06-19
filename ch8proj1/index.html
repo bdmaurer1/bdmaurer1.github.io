@@ -3,21 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>Shopping Cart</title>
-  <style>
-    table {
-      width: 80%;
-      margin: auto;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    img {
-      width: 100px;
-    }
-  </style>
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #000;
+  }
+
+  table {
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  th {
+    background-color: #f9d776;
+    color: #333;
+    font-weight: bold;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f9f9f9;
+  }
+
+  img {
+    width: 100px;
+    height: auto;
+  }
+
+  tr:last-child td,
+  tr:nth-last-child(2) td,
+  tr:nth-last-child(3) td {
+    font-weight: bold;
+    background-color: #f0f0f0;
+  }
+</style>
+
 </head>
 <body>
   <h1 style="text-align:center;">Shopping Cart</h1>
