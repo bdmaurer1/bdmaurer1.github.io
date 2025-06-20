@@ -26,7 +26,7 @@ document.write(`<tr><td colspan="4">Subtotal</td><td>$${subtotal.toFixed(2)}</td
 document.write(`<tr><td colspan="4">Tax</td><td>$${tax.toFixed(2)}</td></tr>`);
 document.write(`<tr><td colspan="4">Total</td><td>$${grandTotal.toFixed(2)}</td></tr>`);
 
-
+/* Used ChatGPT for help with writing the function */
 
 
 

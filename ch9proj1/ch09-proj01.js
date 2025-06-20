@@ -9,7 +9,6 @@ files.forEach(file => {
   img.src = `images/${file}.jpg`;
   img.alt = file;
   
-  // When image is clicked, change video source
   img.addEventListener("click", () => {
     video.pause();
     video.src = `videos/${file}.mp4`;
@@ -45,3 +44,4 @@ playPauseBtn.addEventListener("click", () => {
   }
 });
 
+/* Used ChatGPT for help with the JavaScript */

@@ -20,6 +20,6 @@ document.write(`<tr><td colspan="4">Tax</td><td>$${tax.toFixed(2)}</td></tr>`);
 document.write(`<tr><td colspan="4">Shipping</td><td>$${shipping.toFixed(2)}</td></tr>`);
 document.write(`<tr><td colspan="4">Grand Total</td><td>$${grandTotal.toFixed(2)}</td></tr>`);
 
-
+/* Used ChatGPT for help with the function and loop */
 /* add loop and other code here ... in this simple exercise we are not
    going to concern ourselves with minimizing globals, etc */
