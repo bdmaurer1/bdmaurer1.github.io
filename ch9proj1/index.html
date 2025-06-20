@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project 1</title>
+  <style>
+    aside {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    aside img {
+      width: 100px;
+      cursor: pointer;
+    }
+    video {
+      display: block;
+      margin: 0 auto 10px auto;
+      width: 80%;
+      border: 1px solid #ccc;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 10px;
+    }
+    button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align:center;">Project 1</h1>
+
+  <aside></aside>
+
+  <video controls>
+    <source src="videos/Nature-8399.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="controls">
+    <button id="skipBackBtn" data-skip="-10">⏪ 10s</button>
+    <button id="playPauseBtn">▶</button>
+    <button id="stopBtn">⏹ Stop</button>
+    <button id="skipForwardBtn" data-skip="10">⏩ 10s</button>
+  </div>
+
+  <script src="ch09-proj01.js"></script>
+</body>
+</html>
