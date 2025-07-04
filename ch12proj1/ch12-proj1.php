@@ -40,9 +40,9 @@
 
                    <!-- replace each of these rows with a function call -->
                     <?php
+                    outputPostRow(0);
                     outputPostRow(1);
-                    outputPostRow(3);
-                    outputPostRow(9);
+                    outputPostRow(2);
                     ?>
 
                             
