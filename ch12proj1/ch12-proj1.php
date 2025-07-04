@@ -16,11 +16,12 @@
 
 <body>
     <?php 
+        include('data.inc.php'); 
+        include('functions.inc.php'); 
         include('header.inc.php'); 
         include('nav.inc.php'); 
-        include('functions.inc.php'); 
-        include('data.inc.php'); 
     ?>
+
 
     <!-- Page Content -->
     <main class="container">
