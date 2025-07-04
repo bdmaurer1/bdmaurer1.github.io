@@ -16,14 +16,21 @@ function outputStars($rating) {
     return $stars;
 }
 
+
 function outputPostRow($index) {
     global $posts;
+
+    if (!isset($posts[$index])) {
+        echo "<p>Post not found.</p>";
+        return;
+    }
+
     $post = $posts[$index];
 
     echo "<div class='row'>";
 
     echo "<div class='col-md-4'>";
-    echo "<a href='post.php?id={$post['postId']}' class=''><img src='images/{$post['thumb']}' alt='{$post['title']}' class='img-responsive'/></a>";
+    echo "<a href='post.php?id={$post['postId']}'><img src='images/{$post['thumb']}' alt='{$post['title']}' class='img-responsive'/></a>";
     echo "</div>";
 
     echo "<div class='col-md-8'>";
@@ -40,4 +47,7 @@ function outputPostRow($index) {
     echo "</div>";
     echo "<hr/>";
 }
+
+
+
 
