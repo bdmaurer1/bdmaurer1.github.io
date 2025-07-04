@@ -1,3 +1,4 @@
+<?php include('data.inc.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +17,6 @@
 
 <body>
     <?php 
-        include('data.inc.php'); 
         include('functions.inc.php'); 
         include('header.inc.php'); 
         include('nav.inc.php'); 
