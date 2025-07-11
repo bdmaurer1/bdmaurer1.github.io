@@ -1,4 +1,7 @@
+
 <?php
+include_once('data.inc.php');
+
 
 function generateLink($id, $url, $label) {
     return "<a href='$url?id=$id'>$label</a>";
