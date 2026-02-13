@@ -6,15 +6,15 @@
   <title>Daily Task Manager</title>
   <style>
     :root {
-      --bg: #f7f5ef;
-      --panel: #fffdf8;
+      --bg: #f3f7ff;
+      --panel: #fffcf6;
       --text: #1c1c1a;
-      --muted: #61615a;
-      --line: #ded9cc;
-      --brand: #1f6f5f;
-      --brand-2: #175648;
+      --muted: #5e6075;
+      --line: #d7dced;
+      --brand: #2558c8;
+      --brand-2: #1f47a3;
       --danger: #a02622;
-      --nav-bg: #f3efe3;
+      --nav-bg: linear-gradient(180deg, #edf2ff 0%, #fff4e7 100%);
       --chip-bg: #e8f0ec;
       --chip-text: #224a3f;
     }
@@ -29,8 +29,9 @@
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 12% 15%, #ece6d8 0%, transparent 35%),
-        radial-gradient(circle at 88% 85%, #e6efe9 0%, transparent 32%),
+        radial-gradient(circle at 12% 15%, #dfe9ff 0%, transparent 35%),
+        radial-gradient(circle at 88% 85%, #ffe8d5 0%, transparent 34%),
+        radial-gradient(circle at 52% 8%, #e4fff1 0%, transparent 27%),
         var(--bg);
       display: grid;
       place-items: center;
@@ -42,7 +43,7 @@
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 14px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 14px 32px rgba(41, 61, 112, 0.16);
       overflow: hidden;
       display: grid;
       grid-template-columns: 260px 1fr;
@@ -90,7 +91,7 @@
     }
 
     .filter-btn.active {
-      background: var(--brand);
+      background: linear-gradient(90deg, var(--brand), #4b75d7);
       color: #fff;
       border-color: var(--brand);
     }
@@ -102,7 +103,7 @@
     .header {
       padding: 20px 24px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(90deg, #f4efe2, #eef5ef);
+      background: linear-gradient(90deg, #eaf0ff, #fff4de);
     }
 
     .header h1 {
@@ -157,17 +158,19 @@
     }
 
     .summary {
-      color: var(--muted);
+      color: #45507a;
       font-size: 0.92rem;
       margin: 0 0 8px;
+      font-weight: 600;
     }
 
     .task-card {
       border: 1px solid var(--line);
+      border-left: 6px solid #9bb2ea;
       border-radius: 10px;
       padding: 14px;
       margin-top: 12px;
-      background: #fff;
+      background: linear-gradient(180deg, #ffffff 0%, #fffcf8 100%);
     }
 
     .task-top {
@@ -191,6 +194,20 @@
       color: var(--muted);
       font-size: 0.9rem;
       margin-top: 4px;
+    }
+
+    .category-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      background: #eef2ff;
+      color: #2e4381;
+      border: 1px solid #dbe3ff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
     }
 
     .badge {
@@ -217,6 +234,18 @@
     .badge.low {
       background: #dff1e9;
       color: #1f6f5f;
+    }
+
+    .task-card.priority-high {
+      border-left-color: #de6e67;
+    }
+
+    .task-card.priority-medium {
+      border-left-color: #d2ab43;
+    }
+
+    .task-card.priority-low {
+      border-left-color: #5cad8f;
     }
 
     .actions {
@@ -306,11 +335,11 @@
       <div class="filter-group">
         <h3>Category</h3>
         <button class="filter-btn active" data-filter-type="category" data-filter-value="All" type="button">All Categories</button>
-        <button class="filter-btn" data-filter-type="category" data-filter-value="Personal" type="button">Personal</button>
-        <button class="filter-btn" data-filter-type="category" data-filter-value="Work" type="button">Work</button>
-        <button class="filter-btn" data-filter-type="category" data-filter-value="Health" type="button">Health</button>
-        <button class="filter-btn" data-filter-type="category" data-filter-value="Study" type="button">Study</button>
-        <button class="filter-btn" data-filter-type="category" data-filter-value="Errands" type="button">Errands</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Personal" type="button">Personal &#x1F3E0;</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Work" type="button">Work &#x1F4BC;</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Health" type="button">Health &#x1FA7A;</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Study" type="button">Study &#x1F4DA;</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Errands" type="button">Errands &#x1F6D2;</button>
       </div>
     </aside>
 
@@ -323,11 +352,11 @@
       <section class="controls">
         <input id="taskInput" type="text" placeholder="Task title" />
         <select id="categoryInput">
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Health">Health</option>
-          <option value="Study">Study</option>
-          <option value="Errands">Errands</option>
+          <option value="Work">Work &#x1F4BC;</option>
+          <option value="Personal">Personal &#x1F3E0;</option>
+          <option value="Health">Health &#x1FA7A;</option>
+          <option value="Study">Study &#x1F4DA;</option>
+          <option value="Errands">Errands &#x1F6D2;</option>
         </select>
         <select id="priorityInput">
           <option value="High">High Priority</option>
@@ -356,6 +385,14 @@
     let activePriorityFilter = "All";
     let activeCategoryFilter = "All";
 
+    const categoryEmojiMap = {
+      Work: "\u{1F4BC}",
+      Personal: "\u{1F3E0}",
+      Health: "\u{1FA7A}",
+      Study: "\u{1F4DA}",
+      Errands: "\u{1F6D2}"
+    };
+
     function loadTasks() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -378,6 +415,11 @@
 
     function makeId() {
       return Math.random().toString(36).slice(2, 10);
+    }
+
+    function getCategoryLabel(category) {
+      const emoji = categoryEmojiMap[category] || "\u{1F5C2}\uFE0F";
+      return `${emoji} ${category}`;
     }
 
     function addTask() {
@@ -454,7 +496,9 @@
 
     function renderTasks() {
       const filteredTasks = getFilteredTasks();
-      const summary = `<p class="summary">Showing ${filteredTasks.length} of ${tasks.length} tasks | Priority: ${escapeHtml(activePriorityFilter)} | Category: ${escapeHtml(activeCategoryFilter)}</p>`;
+      const currentCategoryLabel =
+        activeCategoryFilter === "All" ? "All Categories" : getCategoryLabel(activeCategoryFilter);
+      const summary = `<p class="summary">Showing ${filteredTasks.length} of ${tasks.length} tasks | Priority: ${escapeHtml(activePriorityFilter)} | Category: ${escapeHtml(currentCategoryLabel)}</p>`;
 
       if (!filteredTasks.length) {
         taskList.innerHTML = `${summary}<p class='empty'>No tasks match the current filters.</p>`;
@@ -465,7 +509,8 @@
 
       filteredTasks.forEach(task => {
         const card = document.createElement("article");
-        card.className = "task-card";
+        const priorityClass = task.priority.toLowerCase();
+        card.className = `task-card priority-${priorityClass}`;
 
         const subtaskRows = task.subtasks
           .map(subtask => {
@@ -480,13 +525,14 @@
           })
           .join("");
 
-        const priorityClass = task.priority.toLowerCase();
-
         card.innerHTML = `
           <div class="task-top">
             <div>
               <p class="task-title ${task.done ? "done" : ""}">${escapeHtml(task.title)}</p>
-              <p class="meta">Category: ${escapeHtml(task.category)}</p>
+              <p class="meta">
+                Category:
+                <span class="category-chip">${escapeHtml(getCategoryLabel(task.category))}</span>
+              </p>
               <span class="badge ${priorityClass}">${escapeHtml(task.priority)} Priority</span>
             </div>
             <div class="actions">
@@ -588,4 +634,5 @@
   </script>
 </body>
 </html>
+
 
