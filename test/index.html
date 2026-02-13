@@ -17,6 +17,14 @@
       --nav-bg: linear-gradient(180deg, #edf2ff 0%, #fff4e7 100%);
       --chip-bg: #e8f0ec;
       --chip-text: #224a3f;
+      --input-bg: #ffffff;
+      --card-bg: linear-gradient(180deg, #ffffff 0%, #fffcf8 100%);
+      --category-chip-bg: #eef2ff;
+      --category-chip-text: #2e4381;
+      --category-chip-border: #dbe3ff;
+      --delete-bg: #f7e5e5;
+      --delete-border: #efcbcb;
+      --delete-hover: #f2d5d5;
     }
 
     * {
@@ -33,16 +41,18 @@
         radial-gradient(circle at 88% 85%, #ffe8d5 0%, transparent 34%),
         radial-gradient(circle at 52% 8%, #e4fff1 0%, transparent 27%),
         var(--bg);
-      display: grid;
-      place-items: center;
-      padding: 20px;
+      display: block;
+      padding: 0;
     }
 
     .app {
-      width: min(1060px, 100%);
+      width: 100%;
+      min-height: 100vh;
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
       box-shadow: 0 14px 32px rgba(41, 61, 112, 0.16);
       overflow: hidden;
       display: grid;
@@ -106,6 +116,13 @@
       background: linear-gradient(90deg, #eaf0ff, #fff4de);
     }
 
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
     .header h1 {
       margin: 0;
       font-size: 1.5rem;
@@ -115,6 +132,15 @@
       margin: 6px 0 0;
       color: var(--muted);
       font-size: 0.95rem;
+    }
+
+    .theme-select {
+      min-width: 130px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text);
     }
 
     .controls {
@@ -136,7 +162,8 @@
       padding: 10px 12px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #fff;
+      background: var(--input-bg);
+      color: var(--text);
     }
 
     button {
@@ -158,7 +185,7 @@
     }
 
     .summary {
-      color: #45507a;
+      color: var(--muted);
       font-size: 0.92rem;
       margin: 0 0 8px;
       font-weight: 600;
@@ -170,7 +197,7 @@
       border-radius: 10px;
       padding: 14px;
       margin-top: 12px;
-      background: linear-gradient(180deg, #ffffff 0%, #fffcf8 100%);
+      background: var(--card-bg);
     }
 
     .task-top {
@@ -201,9 +228,9 @@
       align-items: center;
       gap: 6px;
       margin-top: 6px;
-      background: #eef2ff;
-      color: #2e4381;
-      border: 1px solid #dbe3ff;
+      background: var(--category-chip-bg);
+      color: var(--category-chip-text);
+      border: 1px solid var(--category-chip-border);
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 0.78rem;
@@ -255,15 +282,15 @@
     }
 
     .delete-btn {
-      background: #f7e5e5;
+      background: var(--delete-bg);
       color: var(--danger);
-      border: 1px solid #efcbcb;
+      border: 1px solid var(--delete-border);
       padding: 6px 10px;
       border-radius: 8px;
     }
 
     .delete-btn:hover {
-      background: #f2d5d5;
+      background: var(--delete-hover);
     }
 
     .subtask-list {
@@ -299,6 +326,53 @@
       padding: 20px 0;
     }
 
+    body[data-theme="dark"] {
+      --bg: #0e1422;
+      --panel: #161e31;
+      --text: #ecf0ff;
+      --muted: #aab4d1;
+      --line: #2d3754;
+      --brand: #6f9bff;
+      --brand-2: #5a86e6;
+      --danger: #ff8787;
+      --nav-bg: linear-gradient(180deg, #1a2640 0%, #1f2737 100%);
+      --chip-bg: #2d3958;
+      --chip-text: #d9e5ff;
+      --input-bg: #202b45;
+      --card-bg: linear-gradient(180deg, #1b2440 0%, #182137 100%);
+      --category-chip-bg: #243356;
+      --category-chip-text: #d3e2ff;
+      --category-chip-border: #324775;
+      --delete-bg: #4a2b33;
+      --delete-border: #6e3c47;
+      --delete-hover: #5a333f;
+    }
+
+    body[data-theme="dark"] {
+      background:
+        radial-gradient(circle at 12% 15%, #1d2743 0%, transparent 35%),
+        radial-gradient(circle at 88% 85%, #2a2236 0%, transparent 34%),
+        radial-gradient(circle at 52% 8%, #1a3040 0%, transparent 27%),
+        var(--bg);
+    }
+
+    body[data-theme="dark"] .header {
+      background: linear-gradient(90deg, #1c2c4f, #2b2940);
+    }
+
+    body[data-theme="dark"] .filter-btn {
+      background: #202b45;
+      color: var(--text);
+    }
+
+    body[data-theme="dark"] .filter-btn:hover {
+      background: #253255;
+    }
+
+    body[data-theme="dark"] .subtask-item {
+      color: #d7ddf2;
+    }
+
     @media (max-width: 900px) {
       .app {
         grid-template-columns: 1fr;
@@ -315,6 +389,11 @@
 
       .actions {
         flex-wrap: wrap;
+      }
+
+      .header-row {
+        flex-direction: column;
+        align-items: stretch;
       }
     }
   </style>
@@ -345,8 +424,16 @@
 
     <section class="content">
       <section class="header">
-        <h1>Daily Task Manager</h1>
-        <p>Add tasks, organize by category, and break work into subtasks.</p>
+        <div class="header-row">
+          <div>
+            <h1>Daily Task Manager</h1>
+            <p>Add tasks, organize by category, and break work into subtasks.</p>
+          </div>
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="light">Light Mode</option>
+            <option value="dark">Dark Mode</option>
+          </select>
+        </div>
       </section>
 
       <section class="controls">
@@ -373,6 +460,7 @@
   <script>
     const STORAGE_KEY = "daily-task-manager-v2";
     const LEGACY_STORAGE_KEY = "daily-task-manager-v1";
+    const THEME_STORAGE_KEY = "daily-task-manager-theme";
 
     const taskInput = document.getElementById("taskInput");
     const categoryInput = document.getElementById("categoryInput");
@@ -380,6 +468,7 @@
     const addTaskBtn = document.getElementById("addTaskBtn");
     const taskList = document.getElementById("taskList");
     const sidebar = document.querySelector(".sidebar");
+    const themeSelect = document.getElementById("themeSelect");
 
     let tasks = loadTasks();
     let activePriorityFilter = "All";
@@ -420,6 +509,19 @@
     function getCategoryLabel(category) {
       const emoji = categoryEmojiMap[category] || "\u{1F5C2}\uFE0F";
       return `${emoji} ${category}`;
+    }
+
+    function applyTheme(theme) {
+      const resolvedTheme = theme === "dark" ? "dark" : "light";
+      document.body.dataset.theme = resolvedTheme;
+      themeSelect.value = resolvedTheme;
+      localStorage.setItem(THEME_STORAGE_KEY, resolvedTheme);
+    }
+
+    function initializeTheme() {
+      const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+      const systemPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      applyTheme(savedTheme || (systemPrefersDark ? "dark" : "light"));
     }
 
     function addTask() {
@@ -587,6 +689,11 @@
       if (event.key === "Enter") addTask();
     });
 
+    themeSelect.addEventListener("change", event => {
+      if (!(event.target instanceof HTMLSelectElement)) return;
+      applyTheme(event.target.value);
+    });
+
     sidebar.addEventListener("click", event => {
       const target = event.target;
       if (!(target instanceof HTMLButtonElement)) return;
@@ -630,6 +737,7 @@
       input.value = "";
     });
 
+    initializeTheme();
     renderTasks();
   </script>
 </body>
