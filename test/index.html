@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Task Manager</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --text: #1c1c1a;
+      --muted: #61615a;
+      --line: #ded9cc;
+      --brand: #1f6f5f;
+      --brand-2: #175648;
+      --danger: #a02622;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 15%, #ece6d8 0%, transparent 35%),
+        radial-gradient(circle at 88% 85%, #e6efe9 0%, transparent 32%),
+        var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .app {
+      width: min(860px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, #f4efe2, #eef5ef);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr auto;
+      gap: 10px;
+    }
+
+    input,
+    select,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--brand);
+      color: #fff;
+      cursor: pointer;
+      transition: background 140ms ease;
+    }
+
+    button:hover {
+      background: var(--brand-2);
+    }
+
+    .tasks {
+      padding: 16px 24px 24px;
+    }
+
+    .task-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 12px;
+      background: #fff;
+    }
+
+    .task-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .task-title {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .task-title.done {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .delete-btn {
+      background: #f7e5e5;
+      color: var(--danger);
+      border: 1px solid #efcbcb;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    .delete-btn:hover {
+      background: #f2d5d5;
+    }
+
+    .subtask-list {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 7px;
+    }
+
+    .subtask-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2c2c29;
+    }
+
+    .subtask-item.done span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .subtask-form {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    @media (max-width: 720px) {
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <h1>Daily Task Manager</h1>
+      <p>Add tasks, organize by category, and break work into subtasks.</p>
+    </section>
+
+    <section class="controls">
+      <input id="taskInput" type="text" placeholder="Task title" />
+      <select id="categoryInput">
+        <option value="Work">Work</option>
+        <option value="Personal">Personal</option>
+        <option value="Health">Health</option>
+        <option value="Study">Study</option>
+        <option value="Errands">Errands</option>
+      </select>
+      <button id="addTaskBtn" type="button">Add Task</button>
+    </section>
+
+    <section class="tasks" id="taskList"></section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "daily-task-manager-v1";
+
+    const taskInput = document.getElementById("taskInput");
+    const categoryInput = document.getElementById("categoryInput");
+    const addTaskBtn = document.getElementById("addTaskBtn");
+    const taskList = document.getElementById("taskList");
+
+    let tasks = loadTasks();
+
+    function loadTasks() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveTasks() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    function makeId() {
+      return Math.random().toString(36).slice(2, 10);
+    }
+
+    function addTask() {
+      const title = taskInput.value.trim();
+      const category = categoryInput.value;
+      if (!title) return;
+
+      tasks.unshift({
+        id: makeId(),
+        title,
+        category,
+        done: false,
+        subtasks: []
+      });
+
+      taskInput.value = "";
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleTask(taskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+      task.done = !task.done;
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(taskId) {
+      tasks = tasks.filter(t => t.id !== taskId);
+      saveTasks();
+      renderTasks();
+    }
+
+    function addSubtask(taskId, text) {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      const value = text.trim();
+      if (!value) return;
+
+      task.subtasks.push({
+        id: makeId(),
+        text: value,
+        done: false
+      });
+
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleSubtask(taskId, subtaskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+      const subtask = task.subtasks.find(s => s.id === subtaskId);
+      if (!subtask) return;
+
+      subtask.done = !subtask.done;
+      saveTasks();
+      renderTasks();
+    }
+
+    function renderTasks() {
+      if (!tasks.length) {
+        taskList.innerHTML = "<p class='empty'>No tasks yet. Add your first one above.</p>";
+        return;
+      }
+
+      taskList.innerHTML = "";
+
+      tasks.forEach(task => {
+        const card = document.createElement("article");
+        card.className = "task-card";
+
+        const subtaskRows = task.subtasks
+          .map(subtask => {
+            const checked = subtask.done ? "checked" : "";
+            const doneClass = subtask.done ? "done" : "";
+            return `
+              <li class="subtask-item ${doneClass}">
+                <input type="checkbox" data-role="toggle-subtask" data-task-id="${task.id}" data-subtask-id="${subtask.id}" ${checked} />
+                <span>${escapeHtml(subtask.text)}</span>
+              </li>
+            `;
+          })
+          .join("");
+
+        card.innerHTML = `
+          <div class="task-top">
+            <div>
+              <p class="task-title ${task.done ? "done" : ""}">${escapeHtml(task.title)}</p>
+              <p class="meta">Category: ${escapeHtml(task.category)}</p>
+            </div>
+            <div class="actions">
+              <label>
+                <input type="checkbox" data-role="toggle-task" data-task-id="${task.id}" ${task.done ? "checked" : ""} /> Done
+              </label>
+              <button class="delete-btn" data-role="delete-task" data-task-id="${task.id}" type="button">Delete</button>
+            </div>
+          </div>
+
+          <ul class="subtask-list">${subtaskRows}</ul>
+
+          <form class="subtask-form" data-role="subtask-form" data-task-id="${task.id}">
+            <input type="text" name="subtask" placeholder="Add subtask" />
+            <button type="submit">Add Subtask</button>
+          </form>
+        `;
+
+        taskList.appendChild(card);
+      });
+    }
+
+    // Prevent basic HTML injection from user-entered text.
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    addTaskBtn.addEventListener("click", addTask);
+
+    taskInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") addTask();
+    });
+
+    taskList.addEventListener("click", event => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      if (target.dataset.role === "delete-task") {
+        deleteTask(target.dataset.taskId);
+      }
+    });
+
+    taskList.addEventListener("change", event => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement)) return;
+
+      if (target.dataset.role === "toggle-task") {
+        toggleTask(target.dataset.taskId);
+      }
+
+      if (target.dataset.role === "toggle-subtask") {
+        toggleSubtask(target.dataset.taskId, target.dataset.subtaskId);
+      }
+    });
+
+    taskList.addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement)) return;
+      if (form.dataset.role !== "subtask-form") return;
+
+      const input = form.querySelector("input[name='subtask']");
+      if (!(input instanceof HTMLInputElement)) return;
+
+      addSubtask(form.dataset.taskId, input.value);
+      input.value = "";
+    });
+
+    renderTasks();
+  </script>
+</body>
+</html>
