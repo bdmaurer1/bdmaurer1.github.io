@@ -14,6 +14,9 @@
       --brand: #1f6f5f;
       --brand-2: #175648;
       --danger: #a02622;
+      --nav-bg: #f3efe3;
+      --chip-bg: #e8f0ec;
+      --chip-text: #224a3f;
     }
 
     * {
@@ -35,12 +38,65 @@
     }
 
     .app {
-      width: min(860px, 100%);
+      width: min(1060px, 100%);
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 14px;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
       overflow: hidden;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+
+    .sidebar {
+      background: var(--nav-bg);
+      border-right: 1px solid var(--line);
+      padding: 20px 16px;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+    }
+
+    .filter-group {
+      margin-bottom: 18px;
+    }
+
+    .filter-group h3 {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-btn {
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 6px;
+      cursor: pointer;
+      transition: background 140ms ease, border-color 140ms ease;
+    }
+
+    .filter-btn:hover {
+      background: #f8f6f0;
+    }
+
+    .filter-btn.active {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+    }
+
+    .content {
+      min-width: 0;
     }
 
     .header {
@@ -64,7 +120,7 @@
       padding: 20px 24px;
       border-bottom: 1px solid var(--line);
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr auto;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr auto;
       gap: 10px;
     }
 
@@ -100,6 +156,12 @@
       padding: 16px 24px 24px;
     }
 
+    .summary {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 0 0 8px;
+    }
+
     .task-card {
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -129,6 +191,32 @@
       color: var(--muted);
       font-size: 0.9rem;
       margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 8px;
+      border-radius: 999px;
+      padding: 3px 10px;
+      background: var(--chip-bg);
+      color: var(--chip-text);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .badge.high {
+      background: #f6e3e0;
+      color: #8b1f18;
+    }
+
+    .badge.medium {
+      background: #f6f0dc;
+      color: #7a5a07;
+    }
+
+    .badge.low {
+      background: #dff1e9;
+      color: #1f6f5f;
     }
 
     .actions {
@@ -182,7 +270,16 @@
       padding: 20px 0;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
       .controls {
         grid-template-columns: 1fr;
       }
@@ -195,40 +292,81 @@
 </head>
 <body>
   <main class="app">
-    <section class="header">
-      <h1>Daily Task Manager</h1>
-      <p>Add tasks, organize by category, and break work into subtasks.</p>
-    </section>
+    <aside class="sidebar">
+      <h2>View Tasks</h2>
 
-    <section class="controls">
-      <input id="taskInput" type="text" placeholder="Task title" />
-      <select id="categoryInput">
-        <option value="Work">Work</option>
-        <option value="Personal">Personal</option>
-        <option value="Health">Health</option>
-        <option value="Study">Study</option>
-        <option value="Errands">Errands</option>
-      </select>
-      <button id="addTaskBtn" type="button">Add Task</button>
-    </section>
+      <div class="filter-group">
+        <h3>Priority</h3>
+        <button class="filter-btn active" data-filter-type="priority" data-filter-value="All" type="button">All Priorities</button>
+        <button class="filter-btn" data-filter-type="priority" data-filter-value="High" type="button">High</button>
+        <button class="filter-btn" data-filter-type="priority" data-filter-value="Medium" type="button">Medium</button>
+        <button class="filter-btn" data-filter-type="priority" data-filter-value="Low" type="button">Low</button>
+      </div>
 
-    <section class="tasks" id="taskList"></section>
+      <div class="filter-group">
+        <h3>Category</h3>
+        <button class="filter-btn active" data-filter-type="category" data-filter-value="All" type="button">All Categories</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Personal" type="button">Personal</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Work" type="button">Work</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Health" type="button">Health</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Study" type="button">Study</button>
+        <button class="filter-btn" data-filter-type="category" data-filter-value="Errands" type="button">Errands</button>
+      </div>
+    </aside>
+
+    <section class="content">
+      <section class="header">
+        <h1>Daily Task Manager</h1>
+        <p>Add tasks, organize by category, and break work into subtasks.</p>
+      </section>
+
+      <section class="controls">
+        <input id="taskInput" type="text" placeholder="Task title" />
+        <select id="categoryInput">
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Health">Health</option>
+          <option value="Study">Study</option>
+          <option value="Errands">Errands</option>
+        </select>
+        <select id="priorityInput">
+          <option value="High">High Priority</option>
+          <option value="Medium" selected>Medium Priority</option>
+          <option value="Low">Low Priority</option>
+        </select>
+        <button id="addTaskBtn" type="button">Add Task</button>
+      </section>
+
+      <section class="tasks" id="taskList"></section>
+    </section>
   </main>
 
   <script>
-    const STORAGE_KEY = "daily-task-manager-v1";
+    const STORAGE_KEY = "daily-task-manager-v2";
+    const LEGACY_STORAGE_KEY = "daily-task-manager-v1";
 
     const taskInput = document.getElementById("taskInput");
     const categoryInput = document.getElementById("categoryInput");
+    const priorityInput = document.getElementById("priorityInput");
     const addTaskBtn = document.getElementById("addTaskBtn");
     const taskList = document.getElementById("taskList");
+    const sidebar = document.querySelector(".sidebar");
 
     let tasks = loadTasks();
+    let activePriorityFilter = "All";
+    let activeCategoryFilter = "All";
 
     function loadTasks() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : [];
+        const fallback = localStorage.getItem(LEGACY_STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : (fallback ? JSON.parse(fallback) : []);
+
+        return parsed.map(task => ({
+          ...task,
+          priority: task.priority || "Medium",
+          subtasks: Array.isArray(task.subtasks) ? task.subtasks : []
+        }));
       } catch {
         return [];
       }
@@ -245,12 +383,14 @@
     function addTask() {
       const title = taskInput.value.trim();
       const category = categoryInput.value;
+      const priority = priorityInput.value;
       if (!title) return;
 
       tasks.unshift({
         id: makeId(),
         title,
         category,
+        priority,
         done: false,
         subtasks: []
       });
@@ -302,15 +442,28 @@
       renderTasks();
     }
 
+    function getFilteredTasks() {
+      return tasks.filter(task => {
+        const matchesPriority =
+          activePriorityFilter === "All" || task.priority === activePriorityFilter;
+        const matchesCategory =
+          activeCategoryFilter === "All" || task.category === activeCategoryFilter;
+        return matchesPriority && matchesCategory;
+      });
+    }
+
     function renderTasks() {
-      if (!tasks.length) {
-        taskList.innerHTML = "<p class='empty'>No tasks yet. Add your first one above.</p>";
+      const filteredTasks = getFilteredTasks();
+      const summary = `<p class="summary">Showing ${filteredTasks.length} of ${tasks.length} tasks | Priority: ${escapeHtml(activePriorityFilter)} | Category: ${escapeHtml(activeCategoryFilter)}</p>`;
+
+      if (!filteredTasks.length) {
+        taskList.innerHTML = `${summary}<p class='empty'>No tasks match the current filters.</p>`;
         return;
       }
 
-      taskList.innerHTML = "";
+      taskList.innerHTML = summary;
 
-      tasks.forEach(task => {
+      filteredTasks.forEach(task => {
         const card = document.createElement("article");
         card.className = "task-card";
 
@@ -327,11 +480,14 @@
           })
           .join("");
 
+        const priorityClass = task.priority.toLowerCase();
+
         card.innerHTML = `
           <div class="task-top">
             <div>
               <p class="task-title ${task.done ? "done" : ""}">${escapeHtml(task.title)}</p>
               <p class="meta">Category: ${escapeHtml(task.category)}</p>
+              <span class="badge ${priorityClass}">${escapeHtml(task.priority)} Priority</span>
             </div>
             <div class="actions">
               <label>
@@ -355,7 +511,7 @@
 
     // Prevent basic HTML injection from user-entered text.
     function escapeHtml(text) {
-      return text
+      return String(text)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -363,10 +519,34 @@
         .replace(/'/g, "&#039;");
     }
 
+    function setActiveFilter(type, value) {
+      if (type === "priority") {
+        activePriorityFilter = value;
+      }
+
+      if (type === "category") {
+        activeCategoryFilter = value;
+      }
+
+      document.querySelectorAll(`.filter-btn[data-filter-type="${type}"]`).forEach(button => {
+        button.classList.toggle("active", button.dataset.filterValue === value);
+      });
+
+      renderTasks();
+    }
+
     addTaskBtn.addEventListener("click", addTask);
 
     taskInput.addEventListener("keydown", event => {
       if (event.key === "Enter") addTask();
+    });
+
+    sidebar.addEventListener("click", event => {
+      const target = event.target;
+      if (!(target instanceof HTMLButtonElement)) return;
+      if (target.dataset.filterType !== "priority" && target.dataset.filterType !== "category") return;
+
+      setActiveFilter(target.dataset.filterType, target.dataset.filterValue);
     });
 
     taskList.addEventListener("click", event => {
@@ -408,3 +588,4 @@
   </script>
 </body>
 </html>
+
